@@ -1,16 +1,18 @@
 #include <iostream>
 using namespace std;
 
-class SNode{
-public:
-	int val;
-	SNode* prev;
-};
-
+template <typename T>
 class Stack{
 private:
+	class SNode{
+		public:
+			T val;
+			SNode* prev;
+	};
+
 	SNode* top;
 	int length;
+	
 public:
 	Stack(){
 		length = 0;
@@ -18,15 +20,15 @@ public:
 	}
 	bool Empty();
 	int Size();
-	int Top();
-	void Push(int val);
+	T Top();
+	void Push(T val);
 	void Pop();
 	void Display();
 };
 
 int main(){
-	Stack S;
-	int x;
+	Stack<string> S;
+	string x;
 	char c;
 	while(true){
 		cin >> c;
@@ -46,24 +48,32 @@ int main(){
 	return 0;
 }
 
-bool Stack::Empty(){
+template <typename T>
+bool Stack<T>::Empty(){
 	return (!top);
 }
-int Stack::Size(){
+
+template <typename T>
+int Stack<T>::Size(){
 	return length;
 }
-int Stack::Top(){
+
+template <typename T>
+T Stack<T>::Top(){
 	return top->val;
 }
 
-void Stack::Push(int val){
+template <typename T>
+void Stack<T>::Push(T val){
 	SNode* new_node = new SNode;
 	new_node->val = val;
 	new_node->prev = top;
 	top = new_node;
 	length++;
 }
-void Stack::Pop(){
+
+template <typename T>
+void Stack<T>::Pop(){
 	if(!top) return;
 	
 	SNode* node = top;
@@ -72,7 +82,17 @@ void Stack::Pop(){
 	length--;
 }
 
-void Stack::Display(){
+/*
+ Note : For Display function to work, allowed datatypes for T are - 
+ 		1. int, long long int, unsigned int, etc.
+		2. float, double, long double, etc.
+		3. char, string
+		In other words, all the primitive data types can be used.
+		
+		For all other functions any data type can be used.
+*/
+template <typename T>
+void Stack<T>::Display(){
 	if(!top){
 		cout << "Stack is Empty!" << endl;
 	}
