@@ -1,34 +1,35 @@
 #include <iostream>
 using namespace std;
 
-class QNode{
-public:
-    int val;
-    QNode* next = NULL;
-};
-
+template <typename T>
 class Queue{
 private:
-    QNode* front;
+    class QNode{
+        public:
+            T val;
+            QNode* next = NULL;
+    };
+
+    QNode* front;   
     QNode* back;
     int length;
 public:
-    Queue(){
+    Queue<T>(){
         length = 0;
         front = NULL;
         back = NULL;
     }
     bool Empty();
     int Size();
-    int Front();
-    void Enqueue(int val);
+    T Front();
+    void Enqueue(T val);
     void Dequeue();
     void Display();
 };
 
 int main(){
-    Queue Q;
-    int x;
+    Queue<string> Q;
+    string x;
     char c;
     while(true){
         cin>>c;
@@ -49,17 +50,23 @@ int main(){
     return 0;
 }
 
-bool Queue::Empty(){
+template <typename T>
+bool Queue<T>::Empty(){
     return !front;
 }
-int Queue::Size(){
+
+template <typename T>
+int Queue<T>::Size(){
     return length;
 }
-int Queue::Front(){
+
+template <typename T>
+T Queue<T>::Front(){
     return front->val;
 }
 
-void Queue::Enqueue(int val){
+template <typename T>
+void Queue<T>::Enqueue(T val){
     QNode* new_node = new QNode;
     new_node->val = val;
     if(!front){
@@ -72,7 +79,9 @@ void Queue::Enqueue(int val){
     }
     length++;
 }
-void Queue::Dequeue(){
+
+template <typename T>
+void Queue<T>::Dequeue(){
     if(!front) return;
 
     QNode* node = front;
@@ -81,7 +90,17 @@ void Queue::Dequeue(){
     length--;
 }
 
-void Queue::Display(){
+/*
+ Note : For Display function to work, allowed datatypes for T are - 
+ 		1. int, long long int, unsigned int, etc.
+		2. float, double, long double, etc.
+		3. char, string
+		In other words, all the primitive data types can be used.
+		
+		For all other functions any data type can be used.
+*/
+template <typename T>
+void Queue<T>::Display(){
     if(!front){
         cout<<"Queue is Empty!"<<endl;
     }
